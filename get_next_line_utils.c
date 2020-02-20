@@ -6,11 +6,13 @@
 /*   By: csuehiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 22:16:46 by csuehiro          #+#    #+#             */
-/*   Updated: 2020/02/17 22:54:30 by csuehiro         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:48:35 by csuehiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-size_t	ft_strlen(char *s)
+#include "get_next_line.h"
+
+size_t	ft_strlen(const char *s)
 {
 	size_t	cont;
 
@@ -20,7 +22,7 @@ size_t	ft_strlen(char *s)
 	return (cont);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	size;
 	char	*str;
@@ -49,29 +51,27 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-char	*ft_strcpy(char *str)
+char	*ft_strdup(const char *s1)
 {
+	size_t	len;
+	char	*str;
 	int		cont;
-	int		len;
-	char	*aux;
 
+	len = ft_strlen(s1);
+	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (str == 0)
 		return (0);
 	cont = 0;
-	len = ft_strlen(str);
-	aux = (char *)malloc(sizeof(char) * (len + 1));
-	if (aux == 0)
-		return (0);
-	while (cont < len)
+	while (s1[cont] != '\0')
 	{
-		aux[cont] = str[cont];
+		str[cont] = s1[cont];
 		cont++;
 	}
-	aux[cont] = '\0';
-	return (aux);
+	str[cont] = '\0';
+	return (str);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	int	cont;
 
@@ -79,10 +79,37 @@ char	*ft_strchr(char *s, int c)
 	while (s[cont] != '\0')
 	{
 		if (s[cont] == c)
-			return (&s[cont]);
+			return ((char *)&s[cont]);
 		cont++;
 	}
 	if (c == '\0')
-		return (&s[cont]);
+		return ((char *)&s[cont]);
 	return (0);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	cont;
+
+	cont = -1;
+	if (s == 0)
+		return (0);
+	if (ft_strlen(s) >= start)
+	{
+		sub = (char *)malloc(sizeof(char) * (len + 1));
+		if (sub == 0)
+			return (0);
+		while (++cont < len)
+			sub[cont] = s[start + cont];
+		sub[cont] = '\0';
+	}
+	else
+	{
+		sub = (char *)malloc(sizeof(char) * 1);
+		if (sub == 0)
+			return (0);
+		sub[0] = '\0';
+	}
+	return (sub);
 }
