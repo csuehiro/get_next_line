@@ -6,7 +6,7 @@
 /*   By: csuehiro <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 22:16:46 by csuehiro          #+#    #+#             */
-/*   Updated: 2020/02/19 19:48:35 by csuehiro         ###   ########.fr       */
+/*   Updated: 2020/03/02 22:05:25 by csuehiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,14 @@ size_t	ft_strlen(const char *s)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	size;
 	char	*str;
 	int		cont;
 	int		aux;
 
-	if (s1 == 0)
+	if (s1 == 0 || s2 == 0)
 		return (0);
-	size = ft_strlen(s1) + ft_strlen(s2);
 	cont = 0;
-	str = (char *)malloc(sizeof(char) * (size + 1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (str == 0 || (s1 == 0))
 		return (0);
 	while (s1[cont] != '\0')
@@ -48,6 +46,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		aux++;
 	}
 	str[cont + aux] = '\0';
+	free((char *)s1);
 	return (str);
 }
 
